@@ -1,0 +1,54 @@
+﻿@page "/transacoes/adicionar"
+@using Fina.Core.Enums
+@inherits CreateTransactionPage
+
+<MudText Typo="Typo.h3">Nova Transação</MudText>
+
+<MudPaper Class="pa-8 mt-4">
+    <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
+        <DataAnnotationsValidator />
+
+        <MudTextField Label="Título"
+                      HelperText="Campo obrigatório"
+                      @bind-Value="InputModel.Title"
+                      For="@(() => InputModel.Title)" />
+
+        <MudDatePicker Label="Recebido"
+                        HelperText="Campo obrigatório"
+                        @bind-Date="InputModel.PaidOrReceivedAt"
+                        For="@(() => InputModel.PaidOrReceivedAt)" />
+
+        <MudSelect Label="Tipo de Transação"
+                   HelperText="Campo Obrigatório"
+                    @bind-Value="InputModel.Type" >
+            @foreach (ETransactionType item in Enum.GetValues(typeof(ETransactionType)))
+            {
+                <MudSelectItem Value="@item">@item</MudSelectItem>
+            }
+        </MudSelect>
+
+        <MudNumericField Label="Quantia"
+                         HelperText="Campo Obrigatório"
+                         @bind-Value="InputModel.Amount"
+                         Variant="Variant.Outlined" 
+                         Min="1" Max="100000" />
+
+        <MudNumericField Label="Categoria"
+                         HelperText="Campo Obrigatório"
+                         @bind-Value="InputModel.CategoryId"
+                         Variant="Variant.Outlined" />
+
+        @if (IsBusy)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary">
+                Salvar
+            </MudButton>
+        }
+    </EditForm>
+</MudPaper>

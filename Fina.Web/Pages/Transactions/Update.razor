@@ -1,0 +1,57 @@
+﻿@page "/transacoes/editar/{IdTransacao:int}"
+@using Fina.Core.Enums
+@inherits UpdateTransactionsPage
+
+<MudText Typo="Typo.h3">Editar Transação</MudText>
+
+<MudPaper Class="pa-8 mt-4">
+    <EditForm Model="@Transactions" OnValidSubmit="OnValidSubmitAsync">
+        <DataAnnotationsValidator />
+        <MudText Label="ID"
+                 @bind-Value="Transactions.Id"
+                 For="@(() => Transactions.Id)" />
+
+        <MudTextField Label="Título"
+                      HelperText="Campo obrigatório"
+                      @bind-Value="Transactions.Title"
+                      For="@(() => Transactions.Title)" />
+
+        <MudDatePicker Label="Recebido"
+                       HelperText="Campo obrigatório"
+                       @bind-Date="Transactions.PaidOrReceivedAt"
+                       For="@(() => Transactions.PaidOrReceivedAt)" />
+
+        <MudSelect Label="Tipo de Transação"
+                   HelperText="Campo Obrigatório"
+                   @bind-Value="InputModel.Type">
+            @foreach (ETransactionType item in Enum.GetValues(typeof(ETransactionType)))
+            {
+                <MudSelectItem Value="@item">@item</MudSelectItem>
+            }
+        </MudSelect>
+
+        <MudNumericField Label="Quantia"
+                         HelperText="Campo Obrigatório"
+                         @bind-Value="Transactions.Amount"
+                         Variant="Variant.Outlined"
+                         Min="1" Max="100000" />
+
+        <MudNumericField Label="Categoria"
+                         HelperText="Campo Obrigatório"
+                         @bind-Value="Transactions.CategoryId"
+                         Variant="Variant.Outlined" />
+
+        @if (IsBusy)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary">
+                Salvar
+            </MudButton>
+        }
+    </EditForm>
+</MudPaper>

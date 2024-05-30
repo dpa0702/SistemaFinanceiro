@@ -1,17 +1,17 @@
 ﻿using Fina.Core.Handlers;
 using Fina.Core.Models;
-using Fina.Core.Requests.Categories;
+using Fina.Core.Requests.Transactions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Fina.Web.Pages.Categories
+namespace Fina.Web.Pages.Transactions
 {
-    public partial class GetAllCategoriesPage : ComponentBase
+    public partial class GetAllTransactionsPage : ComponentBase
     {
         #region Properties
 
         public bool IsBusy { get; set; } = false;
-        public List<Category> Categories { get; set; } = [];
+        public List<Transaction> Transactions { get; set; } = [];
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Fina.Web.Pages.Categories
         public IDialogService Dialog { get; set; } = null!;
 
         [Inject]
-        public ICategoryHandler Handler { get; set; } = null!;
+        public ITransactionHandler Handler { get; set; } = null!;
 
         #endregion
 
@@ -35,10 +35,10 @@ namespace Fina.Web.Pages.Categories
             IsBusy = true;
             try
             {
-                var request = new GetAllCategoriesRequest();
-                var result = await Handler.GetAllAsync(request);
+                var request = new GetTransactionsByPeriodRequest();
+                var result = await Handler.GetByPeriodAsync(request);
                 if (result.IsSuccess)
-                    Categories = result.Data ?? [];
+                    Transactions = result.Data ?? [];
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace Fina.Web.Pages.Categories
         {
             var result = await Dialog.ShowMessageBox(
                 "ATENÇÃO",
-                $"Ao prosseguir a categoria {title} será removida. Deseja continuar?",
+                $"Ao prosseguir a transação {title} será removida. Deseja continuar?",
                 yesText: "Excluir",
                 cancelText: "Cancelar");
 
@@ -70,13 +70,13 @@ namespace Fina.Web.Pages.Categories
         {
             try
             {
-                var request = new DeleteCategoryRequest
+                var request = new DeleteTransactionRequest
                 {
                     Id = id
                 };
                 await Handler.DeleteAsync(request);
-                Categories.RemoveAll(x => x.Id == id);
-                Snackbar.Add($"Categoria {title} removida", Severity.Info);
+                Transactions.RemoveAll(x => x.Id == id);
+                Snackbar.Add($"Transação {title} removida", Severity.Info);
             }
             catch (Exception ex)
             {

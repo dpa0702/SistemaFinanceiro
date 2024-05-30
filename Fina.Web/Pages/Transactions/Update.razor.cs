@@ -1,25 +1,25 @@
 ﻿using Fina.Core.Handlers;
 using Fina.Core.Models;
-using Fina.Core.Requests.Categories;
+using Fina.Core.Requests.Transactions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Fina.Web.Pages.Categories
+namespace Fina.Web.Pages.Transactions
 {
-    public partial class UpdateCategoryPage : ComponentBase
+    public partial class UpdateTransactionsPage : ComponentBase
     {
         #region Properties
 
         public bool IsBusy { get; set; } = false;
-        public UpdateCategoryRequest InputModel { get; set; } = new();
-        public Category Category { get; set; } = new();
+        public UpdateTransactionRequest InputModel { get; set; } = new();
+        public Transaction Transactions { get; set; } = new();
 
         #endregion
 
         #region Services
 
         [Inject]
-        public ICategoryHandler Handler { get; set; } = null!;
+        public ITransactionHandler Handler { get; set; } = null!;
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } = null!;
@@ -35,7 +35,7 @@ namespace Fina.Web.Pages.Categories
         #region Parameters
 
         [Parameter]
-        public int IdCategory { get; set; }
+        public int IdTransacao { get; set; }
 
         #endregion Parameters
 
@@ -46,13 +46,13 @@ namespace Fina.Web.Pages.Categories
             IsBusy = true;
             try
             {
-                var request = new GetCategoryByIdRequest
+                var request = new GetTransactionByIdRequest
                 {
-                    Id = IdCategory
+                    Id = IdTransacao
                 };
                 var result = await Handler.GetByIdAsync(request);
                 if (result.IsSuccess)
-                    Category = result.Data;
+                    Transactions = result.Data;
             }
             catch (Exception ex)
             {
@@ -74,15 +74,18 @@ namespace Fina.Web.Pages.Categories
 
             try
             {
-                InputModel.Id = Category.Id;
-                InputModel.Title = Category.Title;
-                InputModel.Description = Category.Description;
+                InputModel.Id = Transactions.Id;
+                InputModel.Title = Transactions.Title;
+                InputModel.PaidOrReceivedAt = Transactions.PaidOrReceivedAt;
+                InputModel.Type = Transactions.Type;
+                InputModel.Amount = Transactions.Amount;
+                InputModel.CategoryId = Transactions.CategoryId;
 
                 var result = await Handler.UpdateAsync(InputModel);
                 if (result.IsSuccess)
                 {
                     Snackbar.Add(result.Message, Severity.Success);
-                    NavigationManager.NavigateTo("/categorias");
+                    NavigationManager.NavigateTo("/transacoes");
                 }
                 else
                     Snackbar.Add(result.Message, Severity.Error);
