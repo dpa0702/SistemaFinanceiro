@@ -17,11 +17,19 @@
     <Columns>
         <PropertyColumn Property="x => x.Id" Title="#" />
         <PropertyColumn Property="x => x.Title" Title="Categoria" />
-        <TemplateColumn Class="d-flex justify-end">
+        <PropertyColumn Property="x => x.Description" Title="Descrição" />
+        <TemplateColumn Filterable="false" Sortable="false">
             <CellTemplate>
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                Color="Color.Error"
                                OnClick="() => OnDeleteButtonClickedAsync(context.Item.Id, context.Item.Title)" />
+            </CellTemplate>
+        </TemplateColumn>
+        <TemplateColumn Filterable="false" Sortable="false">
+            <CellTemplate>
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                Color="Color.Default"
+                               Href=@($"/categorias/editar/{context.Item.Id}") />
             </CellTemplate>
         </TemplateColumn>
     </Columns>
