@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Fina.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class versaoInicial : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace Fina.Api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "NVARCHAR(80)", maxLength: 80, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaidOrReceivedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaidOrReceivedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Type = table.Column<short>(type: "SMALLINT", nullable: false),
                     Amount = table.Column<decimal>(type: "MONEY", nullable: false),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),

@@ -67,7 +67,6 @@ namespace Fina.Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("PaidOrReceivedAt")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")

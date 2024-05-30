@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fina.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240529002556_versaoInicial")]
-    partial class versaoInicial
+    [Migration("20240529231955_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,6 @@ namespace Fina.Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("PaidOrReceivedAt")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")

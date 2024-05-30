@@ -35,7 +35,7 @@ namespace Fina.Api.Handlers
             }
             catch
             {
-                return new Response<Transaction?>(null, 500, "Não foi possível criar sua transação");
+                return new Response<Transaction?>(null, 500, "Não foi possível criar sua transação!");
             }
         }
 
@@ -51,7 +51,7 @@ namespace Fina.Api.Handlers
                     .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
                 if (transaction is null)
-                    return new Response<Transaction?>(null, 404, "Transação não encontrada");
+                    return new Response<Transaction?>(null, 404, "Transação não encontrada!");
 
                 transaction.CategoryId = request.CategoryId;
                 transaction.Amount = request.Amount;
@@ -66,7 +66,7 @@ namespace Fina.Api.Handlers
             }
             catch
             {
-                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação");
+                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação!");
             }
         }
 
@@ -79,7 +79,7 @@ namespace Fina.Api.Handlers
                     .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
                 if (transaction is null)
-                    return new Response<Transaction?>(null, 404, "Transação não encontrada");
+                    return new Response<Transaction?>(null, 404, "Transação não encontrada!");
 
                 context.Transactions.Remove(transaction);
                 await context.SaveChangesAsync();
@@ -88,7 +88,7 @@ namespace Fina.Api.Handlers
             }
             catch
             {
-                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação");
+                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação!");
             }
         }
 
@@ -101,12 +101,12 @@ namespace Fina.Api.Handlers
                     .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
                 return transaction is null
-                    ? new Response<Transaction?>(null, 404, "Transação não encontrada")
+                    ? new Response<Transaction?>(null, 404, "Transação não encontrada!")
                     : new Response<Transaction?>(transaction);
             }
             catch
             {
-                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação");
+                return new Response<Transaction?>(null, 500, "Não foi possível recuperar sua transação!");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Fina.Api.Handlers
             catch
             {
                 return new PagedResponse<List<Transaction>?>(null, 500,
-                    "Não foi possível determinar a data de início ou término");
+                    "Não foi possível determinar a data de início ou término!");
             }
 
             try
@@ -149,7 +149,7 @@ namespace Fina.Api.Handlers
             }
             catch
             {
-                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível obter as transações");
+                return new PagedResponse<List<Transaction>?>(null, 500, "Não foi possível obter as transações!");
             }
         }
     }
