@@ -15,4 +15,5 @@ A connectionString deverá ser colocada dentro do appsettings do projeto
 Após criado o banco de dados e atualizada a connectionString, será necessário executar as migrations do projeto, executando um terminal dentro do diretório do projeto e rodando o comando do entity framework:
 
 PM> cd [diretório do projeto 'Infra']
+
 PM> Update-Database -StartupProject [projeto.'Infra'] -connection "adicioneSuaConectionStringAqui"
